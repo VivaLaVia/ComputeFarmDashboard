@@ -1,0 +1,53 @@
+{
+    "machineStatusPath": "",
+    "machines": {
+        "WSS001": {
+            "suit": "heart",
+            "value": "A",
+            "colorStart": {"r": 255, "g": 0, "b": 0},
+            "colorEnd": {"r": 175, "g": 43, "b": 43}
+        },
+        "WSS002": {
+            "suit": "spade",
+            "value": "K",
+            "colorStart": {"r": 255, "g": 0, "b": 0},
+            "colorEnd": {"r": 175, "g": 43, "b": 43}
+        },
+        "WSS003": {
+            "suit": "diamond",
+            "value": "Q",
+            "colorStart": {"r": 255, "g": 0, "b": 0},
+            "colorEnd": {"r": 175, "g": 43, "b": 43}
+        },
+        "WSS004": {
+            "suit": "club",
+            "value": "J",
+            "colorStart": {"r": 255, "g": 0, "b": 0},
+            "colorEnd": {"r": 175, "g": 43, "b": 43}
+        },
+        "WSS005": {
+            "suit": "club",
+            "value": "10",
+            "colorStart": {"r": 255, "g": 0, "b": 0},
+            "colorEnd": {"r": 175, "g": 43, "b": 43}
+        },
+        "WSS006": {
+            "suit": "diamond",
+            "value": "A",
+            "colorStart": {"r": 255, "g": 0, "b": 0},
+            "colorEnd": {"r": 175, "g": 43, "b": 43}
+        },
+        "WSS007": {
+            "suit": "heard",
+            "value": "K",
+            "colorStart": {"r": 255, "g": 0, "b": 0},
+            "colorEnd": {"r": 175, "g": 43, "b": 43}
+        },
+        "WSS008": {
+            "suit": "heard",
+            "value": "Q",
+            "colorStart": {"r": 255, "g": 0, "b": 0},
+            "colorEnd": {"r": 175, "g": 43, "b": 43}
+        }
+    }
+}

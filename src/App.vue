@@ -1,18 +1,52 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <StatusWidget v-for="machine in Machines" 
+            :key="machine.name" 
+            :card="getCardAttrib(machine.name)" 
+            :machine="machine.name" 
+            :user="machine.user | short" 
+            :task="machine.task" 
+            :progress="machine.progress" 
+            :timestamp="machine.timestamp" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import StatusWidget from '@/components/StatusWidget.vue';
+import Config from '@/config.json';
+import Machines from '@/machines.json';
+
+function getCardAttrib(machine) {
+  return {
+    "suit": Config.machines[machine].suit ? Config.machines[machine].suit : "joker",
+    "value": Config.machines[machine].value ? Config.machines[machine].suit : "joker"
+  }
+}
 
 export default {
   name: 'app',
   components: {
-    HelloWorld,
+    StatusWidget,
   },
+  data: function() {
+    return {
+      Config,
+      Machines
+    }
+  },
+  methods: {
+    getCardAttrib
+  },
+  filters: {
+    short: (name) => {
+      if (!name) return '';
+      return name[0];
+    }
+  },
+  created() {
+        // Load in Status File
+        // Store in machines
+  }
 };
 </script>
 

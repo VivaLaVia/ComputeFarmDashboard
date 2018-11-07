@@ -61,7 +61,7 @@ export default {
 <style scoped lang="scss">
   .card-container {
     position: absolute;
-    top: 50px;
+    top: 67px;
     left: 70px;
     width: 160px;
     height: 200px;

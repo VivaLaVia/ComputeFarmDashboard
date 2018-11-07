@@ -6,7 +6,8 @@
             :machine="machine.name" 
             :user="machine.user | short" 
             :task="machine.task" 
-            :progress="machine.progress" 
+            :currentProgress="machine.currentProgress" 
+            :overallProgress="machine.overallProgress" 
             :timestamp="machine.timestamp" />
   </div>
 </template>

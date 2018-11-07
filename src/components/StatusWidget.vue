@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <div class="progress-circle">
-      <span class="progress-text" :style="{left: getProgressOffsets().x + 'px', top: getProgressOffsets().y + 'px'}">{{ progress }}</span>
+      <span class="current-progress-text" :style="{left: getCurrentProgressOffsets.x + 'px', top: getCurrentProgressOffsets.y + 'px'}">{{ currentProgress }}</span>
+      <span class="overall-progress-text" :style="{left: getOverallProgressOffsets.x + 'px', top: getOverallProgressOffsets.y + 'px'}">{{ overallProgress }}</span>
       <canvas ref="circleCanvas" :width="containerWidth" :height="containerWidth" class="circle"></canvas>
       <div class="progress-circle-inner">
         <Card :user="user" :suit="card.suit" :value="card.value" />
@@ -14,53 +15,63 @@
 
 <script>
 
-var strokeWidth = 40;
+var strokeWidth = 20;
 var containerWidth = 300;
 var center = containerWidth/2;
 
-function getProgressOffsets() {
-  let progress = parseFloat(this.progress);
-  let angle = (progress / 100 * 360 - 90) * (Math.PI / 180);  
+function drawCircle(currentProgress, overallProgress = currentProgress) {
+  let canvas = this.$refs.circleCanvas;
+  let ctx = canvas.getContext('2d');
 
-  let xOffset = center + Math.cos(angle) * (containerWidth/2-20);
-  let yOffset = center + Math.sin(angle) * (containerWidth/2-20);
-
-
-
-  return {x: xOffset, y: yOffset};
-}
-
-function drawCircle(progress) {
-  var canvas = this.$refs.circleCanvas;
-  var ctx = canvas.getContext('2d');
-
-  var radius = center - strokeWidth/2,
+  let radius = center - strokeWidth
       // 0deg   - 1.5 * Pi,
       // 90deg  - 0   *d Pi, 
       // 180deg - 0.5 * Pi, 
       // 270deg - 1   * Pi
-      angleStart = -Math.PI/2,
-      angleEnd = (progress/100) * 2 * Math.PI + (-Math.PI/2);
+  let angleStart = -Math.PI/2;
+  let currentAngleEnd = (currentProgress/100) * 2 * Math.PI + (-Math.PI/2);
+  let overallAngleEnd = (overallProgress/100) * 2 * Math.PI + (-Math.PI/2);
 
   //Create gradient
-  var gradient = ctx.createLinearGradient(0,500,0, 0);
+  let gradient = ctx.createLinearGradient(0,500,0, 0);
   gradient.addColorStop(0, '#c0e674');
   gradient.addColorStop(1, '#40d6a5');
 
-  //Draw circle
+  /*
+   *  Draw Background Circle
+   */
   ctx.beginPath();
-  ctx.arc(center, center, radius, 0, 2*Math.PI, false);
-  ctx.lineWidth = strokeWidth;
-  ctx.strokeStyle = 'rgba(0,0,0, 0.2)'
+  ctx.arc(center, center, radius-10, 0, 2*Math.PI, false);
+  ctx.lineWidth = strokeWidth*2;
+  ctx.strokeStyle = 'rgba(0,0,0, 0.2)';
   ctx.stroke();
 
-  //Draw arc
+  /*
+   *  Draw Progress Arcs
+   */
+
+  // Overall
   ctx.beginPath();
-  ctx.arc(center, center, radius, angleStart, angleEnd);
+  ctx.arc(center, center, radius-25, angleStart, overallAngleEnd);
   ctx.strokeStyle = gradient;
-  ctx.lineWidth = strokeWidth;
+  ctx.lineWidth = strokeWidth-10;
   ctx.lineCap = 'butt';
   ctx.stroke();  
+
+  // Current
+  ctx.beginPath();
+  ctx.arc(center, center, radius-5, angleStart, currentAngleEnd);
+  ctx.strokeStyle = gradient;
+  ctx.lineWidth = strokeWidth + 10;
+  ctx.lineCap = 'butt';
+  ctx.stroke();  
+
+  // Divider
+  ctx.beginPath();
+  ctx.arc(center, center, radius-20, 0, 2*Math.PI, false);
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = 'rgba(0,0,0, 0.25)';
+  ctx.stroke();
 }
 
 import Card from '@/components/Card.vue';
@@ -75,7 +86,8 @@ export default {
     machineName: String,
     user: String,
     task: String,
-    progress: String,
+    currentProgress: Number,
+    overallProgress: Number,
     timestamp: String,
   },
   data() {
@@ -86,12 +98,32 @@ export default {
       value: "A"
     }
   },
+  computed: {
+    getCurrentProgressOffsets: function () {
+      let progress = parseFloat(this.currentProgress);
+      let angle = (progress / 100 * 360 - 90) * (Math.PI / 180);  
+
+      let xOffset = center + Math.cos(angle) * (this,containerWidth/2-20);
+      let yOffset = center + Math.sin(angle) * (this,containerWidth/2-20);
+
+      return {x: xOffset, y: yOffset};
+    },
+    getOverallProgressOffsets: function () { 
+      let progress = parseFloat(this.currentProgress);
+      let angle = (progress / 100 * 360 - 90) * (Math.PI / 180);  
+
+      let xOffset = center + Math.cos(angle) * (this,containerWidth/2-20);
+      let yOffset = center + Math.sin(angle) * (this,containerWidth/2-20);
+
+      return {x: xOffset, y: yOffset};
+    }
+  },
   mounted: function() {
-    this.drawCircle(this.progress);
+    console.log(this.currentProgress, this.overallProgress)
+    this.drawCircle(this.currentProgress, this.overallProgress);
   },
   methods: {
-    drawCircle,
-    getProgressOffsets
+    drawCircle
   }
 };
 </script>

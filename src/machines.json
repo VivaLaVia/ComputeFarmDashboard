@@ -2,48 +2,56 @@
     "name": "WSS001",
     "user": "John Doe",
     "task": "None of the things",
-    "progress": "50",
+    "currentProgress": 50,
+    "overallProgress": 50,
     "timestamp": "Wed, 10 Oct 2018 18:44:36"
 },{
     "name": "WSS002",
     "user": "Donald Duck",
     "task": "Some of the things",
-    "progress": "70",
+    "currentProgress": 70,
+    "overallProgress": 50,
     "timestamp": "Wed, 10 Oct 2018 18:44:36"
 },{
     "name": "WSS003",
     "user": "Mickey Mouse",
     "task": "All of the things!!",
-    "progress": "33.3",
+    "currentProgress": 33.3,
+    "overallProgress": 50,
     "timestamp": "Wed, 10 Oct 2018 18:44:36"
 },{
     "name": "WSS004",
     "user": "Goofy",
     "task": "All the things!!",
-    "progress": "60",
+    "currentProgress": 60,
+    "overallProgress": 50,
     "timestamp": "Wed, 10 Oct 2018 18:44:36"
 },{
     "name": "WSS005",
     "user": "John Doe",
     "task": "All the things!!",
-    "progress": "100",
+    "currentProgress": 99,
+    "overallProgress": 50,
     "timestamp": "Wed, 10 Oct 2018 18:44:36"
 },{
     "name": "WSS006",
     "user": "John Doe",
     "task": "All the things!!",
-    "progress": "100",
+    "currentProgress": 87,
+    "overallProgress": 50,
     "timestamp": "Wed, 10 Oct 2018 18:44:36"
 },{
     "name": "WSS007",
     "user": "John Doe",
     "task": "All the things!!",
-    "progress": "0",
+    "currentProgress": 0,
+    "overallProgress": 50,
     "timestamp": "Wed, 10 Oct 2018 18:44:36"
 },{
     "name": "WSS008",
     "user": "John Doe",
     "task": "All the things!!",
-    "progress": "3",
+    "currentProgress": 3,
+    "overallProgress": 50,
     "timestamp": "Wed, 10 Oct 2018 18:44:36"
 }]

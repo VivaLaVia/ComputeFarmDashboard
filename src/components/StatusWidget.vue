@@ -7,7 +7,7 @@
       
       <div class="progress-tooltop" ref="progressTooltip"></div>
 
-      <canvas ref="circleCanvas" @mouseover="mouseOver" @mouseleave="hideProgress" :width="containerWidth" :height="containerWidth" class="circle"></canvas>
+      <canvas ref="circleCanvas" @mouseover="mouseOver" @mouseleave="mouseLeave" :width="containerWidth" :height="containerWidth" class="circle"></canvas>
 
       <div class="progress-circle-inner">
         <Card :user="user" :suit="card.suit" :value="card.value" />
@@ -86,6 +86,8 @@
   }
 
   function mouseOver(mouse) {
+    console.log("Mouse Over")
+    let tooltip = this.$refs.progressTooltip;
     let x  = mouse.clientX;
     let y  = mouse.clientY + window.pageYOffset;
 
@@ -99,29 +101,36 @@
     if(distFromCenter >= currentCircleRadius - (strokeWidth * currentArcWeight / 2) && 
         distFromCenter <= currentCircleRadius + (strokeWidth * currentArcWeight / 2)) {
 
-        showProgress(this.$refs, x, y, `Current job progress: ${this.currentProgress}%`);
+        showProgress(tooltip, x, y, `Current job progress: ${this.currentProgress}%`);
         return;
     } 
     
     if(distFromCenter >= overallCircleRadius - (strokeWidth * overallArcWeight / 2) && 
         distFromCenter <= overallCircleRadius + (strokeWidth * overallArcWeight / 2)) {
 
-        showProgress(this.$refs, x, y, `Overall jobs progress: ${this.overallProgress}%`);
+        showProgress(tooltip, x, y, `Overall jobs progress: ${this.overallProgress}%`);
         return;
     }
   }
 
-  function showProgress($refs, x, y, text) {
-    let tooltip = $refs.progressTooltip;
-    console.log(tooltip)
+  function mouseLeave(mouse) {
+    console.log("Mouse Out");
+    let tooltip = this.$refs.progressTooltip;
+    hideProgress(tooltip);
+  }
+
+    
+  function showProgress(tooltip, x, y, text) {
     tooltip.style.display = "inline-block";
-    //tooltip.style.left = x;
-    //tooltip.style.top = y;
+    tooltip.style.position = "absolute";
+    tooltip.style.left = `${x}px`;
+    tooltip.style.top = `${y}px`;
     tooltip.innerHTML = text;
   }
 
-  function hideProgress() {
-    this.$refs.progressTooltip.style.display = "none";
+  function hideProgress(tooltip) {
+    console.log("Mouse Out")
+    tooltip.style.display = "none";
   }
 
   import Card from '@/components/Card.vue';
@@ -174,7 +183,7 @@
     methods: {
       drawCircle,
       mouseOver,
-      hideProgress
+      mouseLeave
     }
   };
 </script>
@@ -192,12 +201,9 @@
       .progress-circle {
         position: relative;
 
-          &:hover > .progress-tooltip {
-            display: inline-block;
-          }
-
           .progress-tooltip {
             display: none;
+            position: absolute;
           }
 
           .progress-text {

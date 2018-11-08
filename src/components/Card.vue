@@ -1,7 +1,7 @@
 <template>
   <div class="card-container">
     <span class="user-top">{{ user }}</span>
-    <div class="card-inner" :class="[suit, value]">
+    <div class="card-inner" :class="[suit, val]">
 
     </div>
     <span class="user-bottom">{{ user }}</span>
@@ -52,7 +52,7 @@ export default {
   props: {
     user: String,
     suit: String,
-    value: String
+    val: String
   }
 };
 </script>
@@ -69,6 +69,7 @@ export default {
     background: #fff;
     -webkit-box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
     box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+    transition: all 0.175s;
 
     .card-inner {
       border: 1px solid #000;
@@ -114,7 +115,84 @@ export default {
 
   }
 
+  .Ace {
+    &:before {
+      font-size: 6em !important;
+      line-height: 150px !important;
+      width: 122px;
+      margin: auto !important;
+    } 
+    
+    &:after {
+      content: '' !important;
+    }
+  }
 
+  .King {
+    background-size: 120px 170px;
+    border: none !important;
+
+    &.club {
+      background-image: url('~@/assets/cards/face-king-club.png');
+    }
+    &.diamond {
+      background-image: url('~@/assets/cards/face-king-diamond.png');
+    }
+    &.heart {
+      background-image: url('~@/assets/cards/face-king-heart.png');
+    }
+    &.spade {
+      background-image: url('~@/assets/cards/face-king-spade.png');
+    }
+
+    &:before, &:after {
+      content: '' !important;
+    }
+  }
+
+  .Queen {
+    background-size: 120px 170px;
+    border: none !important;
+
+    &.club {
+      background-image: url('~@/assets/cards/face-queen-club.png');
+    }
+    &.diamond {
+      background-image: url('~@/assets/cards/face-queen-diamond.png');
+    }
+    &.heart {
+      background-image: url('~@/assets/cards/face-queen-heart.png');
+    }
+    &.spade {
+      background-image: url('~@/assets/cards/face-queen-spade.png');
+    }
+
+    &:before, &:after {
+      content: '' !important;
+    }
+  }
+
+  .Jack {
+    background-size: 120px 170px;
+    border: none !important;
+
+    &.club {
+      background-image: url('~@/assets/cards/face-jack-club.png');
+    }
+    &.diamond {
+      background-image: url('~@/assets/cards/face-jack-diamond.png');
+    }
+    &.heart {
+      background-image: url('~@/assets/cards/face-jack-heart.png');
+    }
+    &.spade {
+      background-image: url('~@/assets/cards/face-jack-spade.png');
+    }
+
+    &:before, &:after {
+      content: '' !important;
+    }
+  }
 
 
   .diamond:before, .diamond:after {

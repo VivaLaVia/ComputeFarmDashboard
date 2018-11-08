@@ -2,15 +2,22 @@
   <div class="container">
     <div class="progress-circle">
 
-      <span class="current-progress-text" :style="{left: getCurrentProgressOffsets.x + 'px', top: getCurrentProgressOffsets.y + 'px'}">{{ currentProgress }}</span>
-      <span class="overall-progress-text" :style="{left: getOverallProgressOffsets.x + 'px', top: getOverallProgressOffsets.y + 'px'}">{{ overallProgress }}</span>
-      
-      <div class="progress-tooltop" ref="progressTooltip"></div>
+      <span class="current-progress-text progress-text" 
+          :style="{left: getCurrentProgressOffsets.x + 'px', top: getCurrentProgressOffsets.y + 'px'}">
+          Current Task: <span class="progress-percent">{{ currentProgress }}</span>
+      </span>
+      <span class="overall-progress-text progress-text" 
+          :style="{left: getOverallProgressOffsets.x + 'px', top: getOverallProgressOffsets.y + 'px'}">
+          Overall Tasks: <span class="progress-percent">{{ overallProgress }}</span>
+      </span>
 
-      <canvas ref="circleCanvas" @mouseover="mouseOver" @mouseleave="mouseLeave" :width="containerWidth" :height="containerWidth" class="circle"></canvas>
+      <canvas ref="circleCanvas" class="circle"
+          @mouseover="mouseOver" @mouseleave="mouseLeave" 
+          :width="containerWidth" :height="containerWidth">
+      </canvas>
 
       <div class="progress-circle-inner">
-        <Card :user="user" :suit="card.suit" :value="card.value" />
+        <Card :user="user" :suit="card.suit" :val="card.value" />
       </div>  
 
       <span class="task-name">{{ task }}</span>
@@ -86,53 +93,16 @@
   }
 
   function mouseOver(mouse) {
-    console.log("Mouse Over")
-    let tooltip = this.$refs.progressTooltip;
+    //console.log("Mouse Over");
     let x  = mouse.clientX;
     let y  = mouse.clientY + window.pageYOffset;
-
-    let canvasBounds = this.$refs.circleCanvas.getBoundingClientRect();
-    
-    let a = x - (canvasBounds.left + containerWidth/2);
-    let b = y - (window.pageYOffset + canvasBounds.top + containerWidth/2);
-
-    let distFromCenter = Math.sqrt(Math.pow(Math.abs(a), 2) + Math.pow(Math.abs(b), 2));
-
-    if(distFromCenter >= currentCircleRadius - (strokeWidth * currentArcWeight / 2) && 
-        distFromCenter <= currentCircleRadius + (strokeWidth * currentArcWeight / 2)) {
-
-        showProgress(tooltip, x, y, `Current job progress: ${this.currentProgress}%`);
-        return;
-    } 
-    
-    if(distFromCenter >= overallCircleRadius - (strokeWidth * overallArcWeight / 2) && 
-        distFromCenter <= overallCircleRadius + (strokeWidth * overallArcWeight / 2)) {
-
-        showProgress(tooltip, x, y, `Overall jobs progress: ${this.overallProgress}%`);
-        return;
-    }
   }
 
   function mouseLeave(mouse) {
-    console.log("Mouse Out");
-    let tooltip = this.$refs.progressTooltip;
-    hideProgress(tooltip);
+    //console.log("Mouse Leave");
   }
 
     
-  function showProgress(tooltip, x, y, text) {
-    tooltip.style.display = "inline-block";
-    tooltip.style.position = "absolute";
-    tooltip.style.left = `${x}px`;
-    tooltip.style.top = `${y}px`;
-    tooltip.innerHTML = text;
-  }
-
-  function hideProgress(tooltip) {
-    console.log("Mouse Out")
-    tooltip.style.display = "none";
-  }
-
   import Card from '@/components/Card.vue';
 
   export default {
@@ -151,10 +121,7 @@
     },
     data() {
       return {
-        containerWidth: containerWidth,
-        suit: "diamond",
-        color: "red",
-        value: "A"
+        containerWidth: containerWidth
       }
     },
     computed: {
@@ -198,48 +165,48 @@
     margin: 8px;
     position: relative;
 
-      .progress-circle {
-        position: relative;
+    .progress-circle {
+      position: relative;
 
-          .progress-tooltip {
-            display: none;
-            position: absolute;
-          }
+      .progress-text {
+        color: rgba(0,0,0, 0.37);
+        font-size: 0.9em;
 
-          .progress-text {
-            position: absolute;
-            width: 26px;
-            height: 26px;
-            margin-left: -13px;
-            margin-top: -13px;
-            line-height: 26px;
-            font-weight: 600;
-            font-size: 1em;
-            z-index: 100;
-          }
+        .progress-percent {
+          color: rgba(0,0,0, 0.87);
+          font-weight: 600;
+          font-size: 1.1em;
 
-          .task-name {
-            display: block;
-            font-weight: 600;
-            font-size: 1.2em;
+          &:after {
+            content: '%';
+            font-weight: normal;
+            font-size: 0.9em;
           }
-
-          .timestamp {
-            color: rgba(0,0,0, 0.37);
-            font-size: .9em;
-          }
+        }
       }
 
-      .card {
-        width: 160px;
-        height: 200px;
-        background-color: white;
-        box-shadow: 2px 2px 8px 0px rgba(0,0,0, 0.37);
-        border-radius: 3px;
-        position: absolute;
-        top: 50px;
-        left: 70px;
+      .task-name {
+        display: block;
+        font-weight: 600;
+        font-size: 1.2em;
       }
+
+      .timestamp {
+        color: rgba(0,0,0, 0.37);
+        font-size: .9em;
+      }
+    }
+
+    .card {
+      width: 160px;
+      height: 200px;
+      background-color: white;
+      box-shadow: 2px 2px 8px 0px rgba(0,0,0, 0.37);
+      border-radius: 3px;
+      position: absolute;
+      top: 50px;
+      left: 70px;
+    }
   }
 
 

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <StatusWidget v-for="machine in Machines" 
-            :key="machine.name" 
+    <StatusWidget class="status-widget"
+            v-for="machine in Machines" :key="machine.name" 
             :card="getCardAttrib(machine.name)" 
             :machine="machine.name" 
             :user="machine.user | short" 
@@ -20,7 +20,7 @@ import Machines from '@/machines.json';
 function getCardAttrib(machine) {
   return {
     "suit": Config.machines[machine].suit ? Config.machines[machine].suit : "joker",
-    "value": Config.machines[machine].value ? Config.machines[machine].suit : "joker"
+    "value": Config.machines[machine].value ? Config.machines[machine].value : "joker"
   }
 }
 
@@ -58,6 +58,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 20px;
+
+  .status-widget {
+    margin-bottom: 90px;
+  }
 }
 </style>
